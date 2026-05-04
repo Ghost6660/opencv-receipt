@@ -1,2 +1,9 @@
 venv/
 images/
+OCR_dataset/
+CCKFUPM_RECEIPTS_OCR_TEXT/
+out*/
+archive/
+.vscode
+.venv/
+__pycache__/
