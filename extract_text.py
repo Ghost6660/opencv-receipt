@@ -43,7 +43,7 @@ OLLAMA_MODEL = "qwen3:14b"   # or whatever you pulled in Ollama
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "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")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 
 # qwen/qwen3-32b rate limits from your screenshot.
 GROQ_LIMIT_RPM = 30
