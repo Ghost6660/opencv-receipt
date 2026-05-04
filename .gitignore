@@ -7,3 +7,4 @@ archive/
 .vscode
 .venv/
 __pycache__/
+extracted_receipts.json

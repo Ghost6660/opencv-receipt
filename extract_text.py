@@ -32,9 +32,10 @@ import pytesseract
 import requests
 import time
 
+
 # ===================== USER CONFIG =====================
 
-INPUT_TXT_DIR = Path(r"D:\UNI\252\opencv project\output3")  # change later to your OCR text folder
+INPUT_TXT_DIR = Path(r"C:\Users\User\Downloads\UNI\252\OPENCV PROJECT\ocrText\CCKFUPM_RECEIPTS_OCR_TEXT")  # change later to your OCR text folder
 OUT_JSON = Path(r"extracted_receipts.json")
 LLM_PROVIDER = "groq"  # "groq" or "ollama"
 
@@ -612,13 +613,26 @@ def is_text_file(p: Path) -> bool:
     return p.suffix.lower() == ".txt"
 
 
+def _natural_key(name: str):
+    """Return a key that sorts numbers in filenames naturally.
+
+    Example: data2 -> ['data', 2, ''] so data2 < data10.
+    """
+    parts = re.split(r"(\d+)", name)
+    return [int(p) if p.isdigit() else p.lower() for p in parts]
+
+
 def main():
     if not INPUT_TXT_DIR.exists():
         raise SystemExit(f"INPUT_TXT_DIR not found: {INPUT_TXT_DIR.resolve()}")
     if LLM_PROVIDER.strip().lower() == "groq" and not GROQ_API_KEY:
         raise SystemExit("GROQ_API_KEY is empty. Set it in your environment and rerun.")
 
-    text_paths = sorted([p for p in INPUT_TXT_DIR.iterdir() if p.is_file() and is_text_file(p)])
+    # Use natural/human sorting so numeric parts order correctly
+    text_paths = sorted(
+        [p for p in INPUT_TXT_DIR.iterdir() if p.is_file() and is_text_file(p)],
+        key=lambda p: _natural_key(p.name),
+    )
 
     results = []
     for p in text_paths:
